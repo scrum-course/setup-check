@@ -7,7 +7,7 @@
   },
   "hostRequirements": { "cpus": 2 },
   "forwardPorts": [8000],
-  "postCreateCommand": "[ -f .env ] || cp .env.example .env; composer install && npm ci && php artisan key:generate --force && npx playwright install --with-deps chromium",
+  "postCreateCommand": "[ -f .env ] || cp .env.example .env; composer install && npm install && php artisan key:generate --force && npx playwright install --with-deps chromium",
   "postStartCommand": "echo 'Run ./check.sh --offsite. Stop this codespace when you are done (github.com/codespaces).'",
   "customizations": {
     "vscode": {

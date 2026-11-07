@@ -30,9 +30,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "24"
-          cache: npm
       - run: composer install --no-interaction --prefer-dist --no-progress
-      - run: npm ci --no-audit --no-fund
+      # No lock files are committed by the build round (they could not be generated there);
+      # `npm install` / `composer install` resolve from the constraints. Once package-lock.json
+      # is committed (first push), this may become `npm ci` with `cache: npm`.
+      - run: npm install --no-audit --no-fund
       - run: npx playwright install chromium
       - run: composer check
       - run: npm run check
@@ -48,10 +50,9 @@ jobs:
         if: runner.os == 'Windows'
         shell: pwsh
         run: .\check.ps1 -Offsite
-      - name: The 1-test app
+      - name: The 1-test app (no .env, no key:generate — exactly guide L1.1 step 5)
         shell: bash
         run: |
-          cp .env.example .env
-          php artisan key:generate --force
+          test ! -f .env
           php artisan test
           npm test

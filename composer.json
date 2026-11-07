@@ -1,21 +1,67 @@
 {
+    "$schema": "https://getcomposer.org/schema.json",
     "name": "scrum-course/setup-check",
     "description": "Pre-course toolchain check: a 1-test Laravel app (Pest) plus check scripts. Training repo.",
     "type": "project",
+    "keywords": ["laravel", "training", "setup-check"],
     "license": "MIT",
     "require": {
-        "php": "^8.3"
+        "php": "^8.3",
+        "laravel/framework": "^12.0",
+        "laravel/tinker": "^2.10.1"
+    },
+    "require-dev": {
+        "fakerphp/faker": "^1.23",
+        "mockery/mockery": "^1.6",
+        "nunomaduro/collision": "^8.6",
+        "pestphp/pest": "^3.7",
+        "pestphp/pest-plugin-laravel": "^3.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
     },
     "scripts": {
         "check": [
             "@php scripts/check-php.php"
+        ],
+        "test": [
+            "@php artisan config:clear --ansi",
+            "@php artisan test"
+        ],
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi"
+        ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
         ]
     },
     "scripts-descriptions": {
-        "check": "Check PHP 8.3, the course's PHP extensions and Composer >= 2.7"
+        "check": "Check PHP 8.3, the course's PHP extensions and Composer >= 2.7",
+        "test": "Run the one Pest test (no .env needed)"
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": []
+        }
     },
     "config": {
-        "sort-packages": true
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
+        }
     },
     "minimum-stability": "stable",
     "prefer-stable": true

@@ -5,7 +5,10 @@ Course plan §6.1, §6.5, §11.1 (4 h); gate: exists 8 Nov, smoke-tested and **s
 ## In this scaffold (✔ = done)
 ✔ `check.sh` (macOS/Linux, bash 3.2 compatible) · ✔ `check.ps1` (Windows PowerShell 5.1 and 7) · ✔ `scripts/check-php.php` (`composer check`) · ✔ `scripts/check-node.mjs` (`npm run check`) · ✔ `composer.json`/`package.json` fragments with the `check` scripts · ✔ `.devcontainer/devcontainer.json` · ✔ `.github/` (CI matrix on Windows, macOS, Ubuntu; issue forms incl. *Setup problem*) · ✔ `README.md`
 
-## To build next round
+## Built (round 2; see `BUILD-NOTES.md`)
+✔ Laravel 12 skeleton, no starter kit, Pest 3 (hand-written: the build workspace could not reach Packagist/npm) · ✔ `tests/Feature/SetupTest.php` (`/up`) with SQLite `:memory:` and a test-only `APP_KEY` in `phpunit.xml` · ✔ `tests/js/setup.test.js` (Vitest + `@playwright/test` import) · ✔ `.env.example` (`DB_CONNECTION=sqlite`, no secrets) · ☐ step 5 (CI green on three runners, human dry runs) — after the first push.
+
+## To build next round (original list)
 1. `laravel new` (current Laravel 12, **no starter kit**, Pest) in this repo; merge the `check` script into the generated `composer.json` and `package.json` (keep `@playwright/test` and `vitest` dev dependencies; pin to the versions current at build).
 2. One Pest test `tests/Feature/SetupTest.php`: `it('boots', fn () => $this->get('/up')->assertOk());` (Laravel's built-in health route) — SQLite in memory in `phpunit.xml`. `phpunit.xml` also sets a fixed **test-only** `APP_KEY` (`<env name="APP_KEY" value="base64:…"/>`, generated once at build, used for nothing else) so `php artisan test` runs straight after `composer install` without `.env` or `key:generate` (guide L1.1 step 5, participant guide §9).
    The current `composer.json` is a **fragment**: `laravel/framework`, `pestphp/pest`, `pestphp/pest-plugin-laravel` and the `artisan` file arrive with `laravel new` in this step; the 9 Nov send date depends on it.

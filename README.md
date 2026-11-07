@@ -32,4 +32,8 @@ npm test                # 1 Vitest test
 ## 4. Send the result
 Reply to the invitation e-mail with a screenshot of the table (or open an issue with the *Setup problem* form). Anything red that the guide does not fix: we fix it in the first 30 minutes of Day 1, or you use the **Codespaces fallback** (guide §8) — **stop your codespace when you finish**.
 
+## For the trainer (maintaining this repo)
+- What is inside: a Laravel 12 app with no starter kit and exactly **one Pest test** (`tests/Feature/SetupTest.php`, Laravel's `/up` health route) and **one Vitest test** (`tests/js/setup.test.js`), plus the check scripts. `phpunit.xml` carries a test-only `APP_KEY` and SQLite `:memory:`, so `php artisan test` needs no `.env`.
+- **First push: generate and commit lock files.** On a machine with internet: `composer update --no-interaction --prefer-dist && npm install`, then commit `composer.lock` and `package-lock.json` (step 3 of this README uses `npm ci`, which needs the lock). Push `main`, wait for CI to go green on Windows, macOS and Ubuntu, then do the human dry runs (BUILD-SPEC step 5). Details: `BUILD-NOTES.md`.
+
 Used in: pre-course (sent 9 Nov for Batch 1, 23 Nov for Batch 2) and Day 1 lab L1.1.
