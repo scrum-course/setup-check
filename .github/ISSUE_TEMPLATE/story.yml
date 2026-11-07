@@ -1,0 +1,72 @@
+name: Story
+description: A product backlog item as a user story with Given/When/Then acceptance criteria
+title: "OPS-___ "
+labels: ["type:story"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Title convention:** start with the OPS code as a prefix (e.g. `OPS-045 Rebook a cancelled booking`); ask the Product Owner for the next free code. The GitHub number is different — see `docs/dev/issue-map.md`.
+        Training data is fictional. Paraphrase anything from your own work: no real names, hostnames, credentials or client data.
+  - type: textarea
+    id: story
+    attributes:
+      label: Story
+      description: "As a <role> I want <capability> so that <value>."
+      placeholder: "**As a** Stand Controller **I want** ... **so that** ..."
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source
+      description: Who asked, through which channel, and when (memo, meeting note, regulator circular, corridor request).
+      placeholder: "Head of Operations memo, 2026-11-17"
+    validations:
+      required: false
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria (Given / When / Then)
+      description: Each scenario must be executable by someone who did not write it. No undefined "valid", "fast" or "correct".
+      value: |
+        - Given ...
+          When ...
+          Then ...
+    validations:
+      required: true
+  - type: textarea
+    id: nfr
+    attributes:
+      label: Non-functional criteria
+      description: Name the ISO/IEC 25010 characteristic and a measurable target; label illustrative targets as illustrative.
+    validations:
+      required: false
+  - type: textarea
+    id: data-rules
+    attributes:
+      label: Data rules
+      description: New or changed data — classification (public / internal / personal / security-sensitive), who may see it, retention and deletion.
+    validations:
+      required: false
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies
+      description: Other items, vendor or partner interfaces, decisions, environments. Use `Refs #n`.
+    validations:
+      required: false
+  - type: checkboxes
+    id: dor
+    attributes:
+      label: Definition of Ready (course DoR)
+      description: Ticked during refinement, not by the author alone.
+      options:
+        - label: User and value stated
+        - label: Given/When/Then acceptance criteria
+        - label: NFR criteria where relevant
+        - label: Dependencies named, and resolved or planned
+        - label: Sized
+        - label: Fits in one sprint
+        - label: Test data known
+        - label: Source recorded

@@ -1,0 +1,57 @@
+# ci.yml — setup-check. Proves the check scripts and the 1-test app work on the three
+# participant platforms before the setup guide is sent (gate: 9 Nov).
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: check (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          extensions: pdo_sqlite, pdo_pgsql, intl, mbstring, zip, curl, openssl, fileinfo
+          tools: composer:v2
+          coverage: none
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+      - run: composer install --no-interaction --prefer-dist --no-progress
+      - run: npm ci --no-audit --no-fund
+      - run: npx playwright install chromium
+      - run: composer check
+      - run: npm run check
+      - name: check.sh (macOS / Linux)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: ./check.sh --offsite
+      - name: check.ps1 (Windows PowerShell 5.1)
+        if: runner.os == 'Windows'
+        shell: powershell
+        run: .\check.ps1 -Offsite
+      - name: check.ps1 (PowerShell 7)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: .\check.ps1 -Offsite
+      - name: The 1-test app
+        shell: bash
+        run: |
+          cp .env.example .env
+          php artisan key:generate --force
+          php artisan test
+          npm test

@@ -1,0 +1,40 @@
+name: Setup problem
+description: Something in the setup check failed and the guide did not fix it
+title: "SETUP: "
+labels: ["setup"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Paste the check table. Remove anything about your employer's network (proxy names, internal hostnames) — "corporate proxy" is enough.
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - Windows 11
+        - Windows 10
+        - macOS (Apple silicon)
+        - macOS (Intel)
+        - Linux
+    validations:
+      required: true
+  - type: textarea
+    id: table
+    attributes:
+      label: Output of check.sh / check.ps1
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: tried
+    attributes:
+      label: What you already tried
+    validations:
+      required: false
+  - type: checkboxes
+    id: policy
+    attributes:
+      label: Laptop policy
+      options:
+        - label: My laptop is managed by my employer and I cannot install software myself

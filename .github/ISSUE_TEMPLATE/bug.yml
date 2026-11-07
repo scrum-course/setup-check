@@ -1,0 +1,161 @@
+name: Bug / defect report
+description: A reproducible defect report with severity decided by rule (B6)
+title: "BUG: "
+labels: ["type:bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Write it so that **someone else can reproduce it from this report alone**. Severity is decided by the rule below; priority is set at triage by the Product Owner.
+        Never paste secrets, tokens, passwords or real personal data. Lab data is fictional.
+  - type: input
+    id: summary
+    attributes:
+      label: Summary
+      description: "What is wrong, where. One line. Example: Officer can approve a Visitor pass that includes Apron."
+    validations:
+      required: true
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Environment
+      options:
+        - Trainer stack on the LAN (192.168.8.10)
+        - Trainer stack through the tunnel
+        - Local laptop
+        - Codespace
+        - CI (GitHub Actions)
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version / state / commit
+      placeholder: "v0.3.0 (trainer stack) or commit abc1234"
+    validations:
+      required: true
+  - type: dropdown
+    id: role
+    attributes:
+      label: Account / role used
+      options:
+        - requester1 / requester2 (Requester)
+        - officer (Pass Office Officer)
+        - secmgr (Security Manager)
+        - controller (Stand Controller)
+        - dutymgr (AOCC Duty Manager)
+        - handler (Ground Handler)
+        - admin
+        - p1 / p2 (Developer)
+        - API token
+        - not applicable
+    validations:
+      required: true
+  - type: textarea
+    id: preconditions
+    attributes:
+      label: Preconditions and test data
+      placeholder: "A Visitor pass request in UnderReview with zones Landside + Apron, escort named."
+    validations:
+      required: false
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      value: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+      description: Quote the rule or acceptance criterion (e.g. R2, OPS-012 AC 2).
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual result
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: HTTP status and response body, screenshot, log lines, test name. Redact anything sensitive.
+      render: text
+    validations:
+      required: false
+  - type: dropdown
+    id: frequency
+    attributes:
+      label: Frequency
+      options:
+        - Always
+        - Intermittent (state how many out of 10 tries)
+        - Seen once
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity (by rule)
+      description: "Course severity rule (Day 5): decided by impact, not by who is asking."
+      options:
+        - "S1 — operations stopped, or security/safety/personal-data exposure, no workaround"
+        - "S2 — major function wrong or blocked; a workaround exists but is costly"
+        - "S3 — minor function wrong; easy workaround"
+        - "S4 — cosmetic or wording; no functional impact"
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority (set at triage by the PO)
+      description: "Rule: S1 → fix now; S2 → this sprint unless the PO defers in writing; S3 → backlog, ordered; S4 → batch."
+      options:
+        - Not triaged yet
+        - P1 — fix now
+        - P2 — this sprint
+        - P3 — backlog, ordered
+        - P4 — batch with similar items
+    validations:
+      required: false
+  - type: dropdown
+    id: found-in
+    attributes:
+      label: Found in
+      options:
+        - Test design / scripted test (in sprint)
+        - Exploratory session
+        - Automated test (local)
+        - CI
+        - Code review
+        - Production (simulated incident)
+    validations:
+      required: true
+  - type: input
+    id: related
+    attributes:
+      label: Related item
+      description: "The item this verifies or breaks: Refs #n (number from docs/dev/issue-map.md)."
+    validations:
+      required: false
+  - type: textarea
+    id: workaround
+    attributes:
+      label: Workaround
+    validations:
+      required: false
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: Another person reproduced it from this report (or it is marked "not yet reproduced")
+          required: false
+        - label: The report contains no secrets and no real personal data
+          required: true

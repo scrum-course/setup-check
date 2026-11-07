@@ -1,0 +1,43 @@
+name: Spike
+description: A time-boxed investigation that answers one question
+title: "SPIKE: "
+labels: ["type:spike"]
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Question to answer
+      description: One question. If you have two, open two spikes.
+    validations:
+      required: true
+  - type: textarea
+    id: decision
+    attributes:
+      label: Decision it informs
+      description: Which backlog item(s) or ADR wait for this answer? Use Refs #n.
+    validations:
+      required: true
+  - type: input
+    id: timebox
+    attributes:
+      label: Timebox
+      placeholder: "4 hours"
+    validations:
+      required: true
+  - type: textarea
+    id: approach
+    attributes:
+      label: Approach
+      description: What you will read, try or ask. Who you need.
+    validations:
+      required: false
+  - type: textarea
+    id: output
+    attributes:
+      label: Output
+      description: "Short note in the issue, a throwaway prototype branch, or an ADR proposal in docs/adr/."
+      value: |
+        - [ ] Answer written in a comment on this issue
+        - [ ] Follow-up items created or updated
+    validations:
+      required: true

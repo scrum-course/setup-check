@@ -1,0 +1,22 @@
+{
+    "name": "scrum-course/setup-check",
+    "description": "Pre-course toolchain check: a 1-test Laravel app (Pest) plus check scripts. Training repo.",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": "^8.3"
+    },
+    "scripts": {
+        "check": [
+            "@php scripts/check-php.php"
+        ]
+    },
+    "scripts-descriptions": {
+        "check": "Check PHP 8.3, the course's PHP extensions and Composer >= 2.7"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

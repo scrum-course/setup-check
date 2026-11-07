@@ -1,0 +1,16 @@
+{
+  "name": "setup-check",
+  "private": true,
+  "type": "module",
+  "description": "Pre-course toolchain check (Node, Playwright Chromium, network) + 1 Vitest test. Training repo.",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "check": "node scripts/check-node.mjs",
+    "test": "vitest --run",
+    "postinstall": "echo \"Next: npx playwright install chromium (once, before Day 1)\""
+  },
+  "devDependencies": {
+    "@playwright/test": "1.49.1",
+    "vitest": "2.1.8"
+  }
+}
