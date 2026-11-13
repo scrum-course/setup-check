@@ -7,7 +7,7 @@ body:
     attributes:
       value: |
         **Title convention:** start with the OPS code as a prefix (e.g. `OPS-045 Rebook a cancelled booking`); ask the Product Owner for the next free code. The GitHub number is different — see `docs/dev/issue-map.md`.
-        Training data is fictional. Paraphrase anything from your own work: no real names, hostnames, credentials or client data.
+        Training data is fictional (Lakeside International). Write nothing about your employer's real systems, people or data, and no real names, hostnames or credentials.
   - type: textarea
     id: story
     attributes:
