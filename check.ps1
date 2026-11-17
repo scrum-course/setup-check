@@ -137,7 +137,9 @@ if ($GitHubUser) {
 } else { Row WARN "GitHub account" "not given" "Rerun: .\check.ps1 -GitHubUser <your-name>" }
 if ((Have gh) -and ((gh auth status 2>&1 | Out-String) -match "Logged in")) {
   $tfa = (gh api user --jq ".two_factor_authentication" 2>$null)
-  if ($tfa -eq "true") { Row PASS "GitHub 2FA" "enabled" "" } else { Row FAIL "GitHub 2FA" "$tfa" "Turn on 2FA (guide 7.2)" }
+  if ($tfa -eq "true") { Row PASS "GitHub 2FA" "enabled" "" }
+  elseif ($tfa -eq "false") { Row FAIL "GitHub 2FA" "off" "Turn on 2FA (guide 7.2)" }
+  else { Row WARN "GitHub 2FA" "not checked" "Confirm 2FA is on: github.com/settings/security" }
 } else { Row WARN "GitHub 2FA" "not checked" "Confirm 2FA is on: github.com/settings/security" }
 
 # --- Lab LAN ---

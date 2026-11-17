@@ -127,7 +127,9 @@ if [ -n "$GITHUB_USER" ]; then
 else row WARN "GitHub account" "not given" "Rerun: ./check.sh --github-user <your-name>"; fi
 if have gh && gh auth status >/dev/null 2>&1; then
   tfa=$(gh api user --jq '.two_factor_authentication' 2>/dev/null)
-  if [ "$tfa" = "true" ]; then row PASS "GitHub 2FA" "enabled" ""; else row FAIL "GitHub 2FA" "${tfa:-unknown}" "Turn on 2FA (guide §7.2)"; fi
+  if [ "$tfa" = "true" ]; then row PASS "GitHub 2FA" "enabled" ""
+  elif [ "$tfa" = "false" ]; then row FAIL "GitHub 2FA" "off" "Turn on 2FA (guide §7.2)"
+  else row WARN "GitHub 2FA" "not checked" "Confirm 2FA is on: github.com/settings/security"; fi
 else row WARN "GitHub 2FA" "not checked" "Confirm 2FA is on: github.com/settings/security"; fi
 
 # --- Lab LAN (only on site, on Wi-Fi opshub-lab) ---
