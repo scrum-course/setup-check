@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-24.04, windows-latest, macos-latest] # ubuntu pinned: Playwright 1.54 has no browsers for Ubuntu 26
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
