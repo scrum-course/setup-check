@@ -122,6 +122,7 @@ foreach ($u in @("https://github.com", "https://api.github.com", "https://repo.p
   $code = HttpStatus $u
   if ($code -ge 200 -and $code -lt 400) { Row PASS $name "HTTPS ok" "" }
   elseif ($code -eq 0) { Row FAIL $name "no connection" "Network/proxy blocks it - tell the trainer" }
+  elseif (($code -eq 403 -or $code -eq 429) -and $u -eq "https://api.github.com") { Row WARN $name "rate limited (HTTP $code)" "GitHub answered; shared networks hit its hourly limit - retry later" }
   else { Row FAIL $name "HTTP $code" "Proxy or filter answers instead - tell the trainer" }
 }
 

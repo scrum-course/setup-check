@@ -109,6 +109,8 @@ for u in https://github.com https://api.github.com https://repo.packagist.org/pa
   case "$code" in
     2*|3*) row PASS "$name" "HTTPS ok" "" ;;
     000)   row FAIL "$name" "no connection" "Network/proxy blocks it — tell the trainer" ;;
+    403|429) if [ "$name" = "Reach api.github.com" ]; then row WARN "$name" "rate limited (HTTP $code)" "GitHub answered; shared networks hit its hourly limit — retry later"
+             else row FAIL "$name" "HTTP $code" "Proxy or filter answers instead — tell the trainer"; fi ;;
     *)     row FAIL "$name" "HTTP $code" "Proxy or filter answers instead — tell the trainer" ;;
   esac
 done
